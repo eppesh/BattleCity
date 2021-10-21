@@ -4,9 +4,9 @@
 
 namespace battlecity
 {
-// PlayerBase Àà¾²Ì¬Êı¾İ
+// PlayerBase ç±»é™æ€æ•°æ®
 
-int PlayerBase::dev_xy_[4][2] = { {-1, 0}, {0, -1}, {1, 0}, {0, 1} };	// ÒÀ´Î×óÉÏÓÒÏÂ
+int PlayerBase::dev_xy_[4][2] = { {-1, 0}, {0, -1}, {1, 0}, {0, 1} };	// ä¾æ¬¡å·¦ä¸Šå³ä¸‹
 Prop PlayerBase::prop_;
 bool PlayerBase::get_time_prop_ = false;
 bool PlayerBase::get_shovel_prop_ = false;
@@ -23,27 +23,27 @@ PlayerBase::PlayerBase(byte player, BoxMark *box_mark)
 	player_tank_ = new PlayerTank(player_id_);
 	box_mark_ = box_mark;
 
-	player_life_ = 2;		// Íæ¼Ò HP
+	player_life_ = 2;		// ç©å®¶ HP
 	player_tank_level_ = 0;
 
 	Init();
 
-	// ²»Í¬Íæ¼ÒÊı¾İ²»Í¬
+	// ä¸åŒç©å®¶æ•°æ®ä¸åŒ
 	if (player_id_ == 0)
 	{
-		loadimage(&p12_image_, _T("./res/big/1P.gif"));		// 1P\2PÍ¼±ê
+		loadimage(&p12_image_, _T("./res/big/1P.gif"));		// 1P\2På›¾æ ‡
 	}
 	else
 	{
 		loadimage(&p12_image_, _T("./res/big/2P.gif"));
 	}
 
-	// ¹²Í¬µÄÊı¾İ
-	loadimage(&player_tank_ico_image_, _T("./res/big/playertank-ico.gif"));	// Íæ¼ÒÌ¹¿ËÍ¼±ê
-	loadimage(&black_number_image_, _T("./res/big/black-number.gif"));	// ºÚÉ«Êı×Ö
+	// å…±åŒçš„æ•°æ®
+	loadimage(&player_tank_ico_image_, _T("./res/big/playertank-ico.gif"));	// ç©å®¶å¦å…‹å›¾æ ‡
+	loadimage(&black_number_image_, _T("./res/big/black-number.gif"));	// é»‘è‰²æ•°å­—
 
-	// Bullet Êı¾İ³õÊ¼»¯
-	// ¼ÓÔØ×Óµ¯Í¼Æ¬
+	// Bullet æ•°æ®åˆå§‹åŒ–
+	// åŠ è½½å­å¼¹å›¾ç‰‡
 	TCHAR buf[100];
 	for (i = 0; i < 4; i++)
 	{
@@ -51,16 +51,16 @@ PlayerBase::PlayerBase(byte player, BoxMark *box_mark)
 		loadimage(&Bullet::bullet_image[i], buf);
 	}
 
-	// ±¬Õ¨Í¼Æ¬
+	// çˆ†ç‚¸å›¾ç‰‡
 	for (i = 0; i < 3; i++)
 	{
 		_stprintf_s(buf, _T("./res/big/bumb%d.gif"), i);
 		loadimage(&Bomb::bomb_image[i], buf);
 	}
 
-	bomb_timer_.SetDrtTime(20);	// ²»ÄÜÉèÖÃÌ«Ğ¡..
+	bomb_timer_.SetDrtTime(20);	// ä¸èƒ½è®¾ç½®å¤ªå°..
 
-	// ÏÔÊ¾·ÖÊıÃæ°å
+	// æ˜¾ç¤ºåˆ†æ•°é¢æ¿
 	score_panel_ = new ScorePanel(player_id_);
 }
 
@@ -83,19 +83,19 @@ void PlayerBase::Init()
 	get_bomb_prop_ = false;
 	get_shovel_prop_ = false;
 
-	// ²»Í¬Íæ¼ÒÊı¾İ²»Í¬
+	// ä¸åŒç©å®¶æ•°æ®ä¸åŒ
 	if (player_id_ == 0)
 	{
-		p12_image_x_ = 233;									// 1P\2P ×ø±ê
+		p12_image_x_ = 233;									// 1P\2P åæ ‡
 		p12_image_y_ = 129;
-		player_tank_ico_image_x_ = 232;						// Íæ¼ÒÌ¹¿ËÍ¼±ê×ø±ê
+		player_tank_ico_image_x_ = 232;						// ç©å®¶å¦å…‹å›¾æ ‡åæ ‡
 		player_tank_ico_image_y_ = 137;
-		player_life_x_ = 240;								// Íæ¼ÒÉúÃüÖµ×ø±ê
+		player_life_x_ = 240;								// ç©å®¶ç”Ÿå‘½å€¼åæ ‡
 		player_life_y_ = 137;
-		tank_x_ = 4 * 16 + kBoxSize;						// Ì¹¿ËÊ×´Î³öÏÖÊ±ºòµÄÖĞĞÄ×ø±ê
+		tank_x_ = 4 * 16 + kBoxSize;						// å¦å…‹é¦–æ¬¡å‡ºç°æ—¶å€™çš„ä¸­å¿ƒåæ ‡
 		tank_y_ = 12 * 16 + kBoxSize;
 
-		tank_timer_.SetDrtTime(move_speed_dev_[player_tank_level_]);		// Ì¹¿ËÒÆ¶¯ËÙ¶È, ²»Í¬¼¶±ğ²»Í¬Íæ¼Ò ²»Ò»Ñù
+		tank_timer_.SetDrtTime(move_speed_dev_[player_tank_level_]);		// å¦å…‹ç§»åŠ¨é€Ÿåº¦, ä¸åŒçº§åˆ«ä¸åŒç©å®¶ ä¸ä¸€æ ·
 		bullet_timer_.SetDrtTime(bullet_speed_dev_[player_tank_level_]);
 	}
 	else
@@ -115,28 +115,28 @@ void PlayerBase::Init()
 
 	int i = 0;
 	is_died_ = false;
-	tank_dir_ = kDirUp;		// Ì¹¿Ë·½Ïò
+	tank_dir_ = kDirUp;		// å¦å…‹æ–¹å‘
 
-	// ×Óµ¯½á¹¹Êı¾İ
-	int temp_speed[4] = { 2,3,3,4 };			// ²»ÄÜ³¬¹ı 4 !! »áÌøÔ¾¸ñ×ÓÅĞ¶Ï.¸ù¾İÌ¹¿Ë¼¶±ğ·ÖÅä×Óµ¯ËÙ¶ÈÏµÊı
+	// å­å¼¹ç»“æ„æ•°æ®
+	int temp_speed[4] = { 2,3,3,4 };			// ä¸èƒ½è¶…è¿‡ 4 !! ä¼šè·³è·ƒæ ¼å­åˆ¤æ–­.æ ¹æ®å¦å…‹çº§åˆ«åˆ†é…å­å¼¹é€Ÿåº¦ç³»æ•°
 	for (i = 0; i < 2; i++)
 	{
-		bullet_[i].x = kShootTableX;			// x ×ø±êÓÃÓÚÅĞ¶ÏÊÇ·ñ¿ÉÒÔ·¢Éä
+		bullet_[i].x = kShootTableX;			// x åæ ‡ç”¨äºåˆ¤æ–­æ˜¯å¦å¯ä»¥å‘å°„
 		bullet_[i].y = -1000;
 		bullet_[i].direction = kDirUp;
-		bullet_[i].killed_id = 0;				// ¼ÇÂ¼»÷ÖĞµÄµĞ»ú id
+		bullet_[i].killed_id = 0;				// è®°å½•å‡»ä¸­çš„æ•Œæœº id
 
-												// ¸ù¾İÌ¹¿Ë¼¶±ğ·ÖÅä×Óµ¯ËÙ¶ÈÏµÊı
+												// æ ¹æ®å¦å…‹çº§åˆ«åˆ†é…å­å¼¹é€Ÿåº¦ç³»æ•°
 		for (int j = 0; j < 4; j++)
 		{
 			bullet_[i].speed[j] = temp_speed[j];
 		}
 	}
 
-	bullet1_counter_ = 9;						// ×Óµ¯ 1 ÔË¶¯ N ¸öÑ­»·ºó²Å¿ÉÒÔ·¢Éä×Óµ¯ 2 
+	bullet1_counter_ = 9;						// å­å¼¹ 1 è¿åŠ¨ N ä¸ªå¾ªç¯åæ‰å¯ä»¥å‘å°„å­å¼¹ 2 
 	is_moving_ = false;
 
-	// ±¬Õ¨Í¼Æ¬
+	// çˆ†ç‚¸å›¾ç‰‡
 	for (i = 0; i < 2; i++)
 	{
 		bombs_[i].bomb_x = -100;
@@ -145,10 +145,10 @@ void PlayerBase::Init()
 		bombs_[i].counter = 0;
 	}
 
-	// SendKillNumToScorePanel() ÄÚÊ¹ÓÃ
+	// SendKillNumToScorePanel() å†…ä½¿ç”¨
 	has_send_killednum_ = false;
 
-	// É±µĞÊı
+	// æ€æ•Œæ•°
 	for (i = 0; i < 4; i++)
 	{
 		kill_enemy_number_[i] = 0;
@@ -157,23 +157,23 @@ void PlayerBase::Init()
 	is_pause_ = false;
 	pause_counter_ = 0;
 
-	// Ì¹¿ËÊÇ·ñÔÚ±ùÉÏÒÆ¶¯
+	// å¦å…‹æ˜¯å¦åœ¨å†°ä¸Šç§»åŠ¨
 	on_ice_ = false;
 	automove_ = false;
 	automove_counter_ = 0;
 	rand_counter_ = rand() % 6 + 3;
 }
 
-// »æÖÆÍæ¼ÒµÄÒ»Ğ©Êı¾İ: 1P\2P Ì¹¿ËÍ¼±ê ÉúÃü
+// ç»˜åˆ¶ç©å®¶çš„ä¸€äº›æ•°æ®: 1P\2P å¦å…‹å›¾æ ‡ ç”Ÿå‘½
 void PlayerBase::DrawPlayerTankIco(const HDC &right_panel_hdc)
 {
-	// »æÖÆ1P/2P
+	// ç»˜åˆ¶1P/2P
 	TransparentBlt(right_panel_hdc, p12_image_x_, p12_image_y_, kPlayer2IcoSizeX, kPlayer2IcoSizeY,
 		GetImageHDC(&p12_image_), 0, 0, kPlayer2IcoSizeX, kPlayer2IcoSizeY, 0xffffff);
-	// »æÖÆÌ¹¿ËÍ¼±ê
+	// ç»˜åˆ¶å¦å…‹å›¾æ ‡
 	TransparentBlt(right_panel_hdc, player_tank_ico_image_x_, player_tank_ico_image_y_, kPlayerTankIcoSizeX, kPlayerTankIcoSizeY,
 		GetImageHDC(&player_tank_ico_image_), 0, 0, kPlayerTankIcoSizeX, kPlayerTankIcoSizeY, 0x000000);
-	// »æÖÆÍæ¼ÒÉúÃüÊı×Ö
+	// ç»˜åˆ¶ç©å®¶ç”Ÿå‘½æ•°å­—
 	TransparentBlt(right_panel_hdc, player_life_x_, player_life_y_, kBlackNumberSize, kBlackNumberSize,
 		GetImageHDC(&black_number_image_), kBlackNumberSize * player_life_, 0, kBlackNumberSize, kBlackNumberSize, 0xffffff);
 }
@@ -186,7 +186,7 @@ bool PlayerBase::ShowStar(const HDC &center_hdc)
 		break;
 
 	case StarState::kStarStop:
-		SignBox_8(tank_x_, tank_y_, kElementEmpty);		// ·ÀÖ¹Íæ¼Ò»æÖÆµØÍ¼°ÑÌ¹¿Ë³öÏÖµÄÎ»ÖÃÕÚµ²×¡
+		SignBox_8(tank_x_, tank_y_, kElementEmpty);		// é˜²æ­¢ç©å®¶ç»˜åˆ¶åœ°å›¾æŠŠå¦å…‹å‡ºç°çš„ä½ç½®é®æŒ¡ä½
 		SignBox_4(tank_x_, tank_y_, kSignPlayer + player_id_);
 		ring_.SetShowable(3222);
 		return kStopShowStar;
@@ -206,7 +206,7 @@ void PlayerBase::DrawPlayerTank(const HDC &canvas_hdc)
 		return;
 	}
 
-	// 0-5²»ÏÔÊ¾Ì¹¿Ë. 6-11 ÏÔÊ¾.. ÒÀ´ÎÀàÍÆ
+	// 0-5ä¸æ˜¾ç¤ºå¦å…‹. 6-11 æ˜¾ç¤º.. ä¾æ¬¡ç±»æ¨
 	if (is_pause_ && pause_counter_++ / 10 % 2 != 0)
 	{
 		if (pause_counter_ > 266)
@@ -219,12 +219,12 @@ void PlayerBase::DrawPlayerTank(const HDC &canvas_hdc)
 	IMAGE tank = player_tank_->GetTankImage(player_tank_level_, tank_dir_, is_moving_);
 	TransparentBlt(canvas_hdc, (int)(tank_x_ - kBoxSize), (int)(tank_y_ - kBoxSize), kBoxSize * 2, kBoxSize * 2, GetImageHDC(&tank), 0, 0, kBoxSize * 2, kBoxSize * 2, 0x000000);
 
-	// ÏÔÊ¾±£»¤»·
+	// æ˜¾ç¤ºä¿æŠ¤ç¯
 	if (ring_.can_show_)
 	{
 		if (ring_.ShowRing(canvas_hdc, tank_x_, tank_y_) == false)
 		{
-			// ·ÀÖ¹Íæ¼Ò±¬Õ¨µ½½áÊøµÄÊ±ºò,ÖØÉúÎ»ÖÃ±»µĞ»úÕ¼ÓÃ,È»ºóÍæ¼Ò±ê¼Ç±»²Á³ı
+			// é˜²æ­¢ç©å®¶çˆ†ç‚¸åˆ°ç»“æŸçš„æ—¶å€™,é‡ç”Ÿä½ç½®è¢«æ•Œæœºå ç”¨,ç„¶åç©å®¶æ ‡è®°è¢«æ“¦é™¤
 			SignBox_4(tank_x_, tank_y_, kSignPlayer + player_id_);
 		}
 	}
@@ -234,7 +234,7 @@ void PlayerBase::DrawBullet(const HDC &center_hdc)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		// ×Óµ¯ÔÚÒÆ¶¯
+		// å­å¼¹åœ¨ç§»åŠ¨
 		if (bullet_[i].x != kShootTableX)
 		{
 			int dir = bullet_[i].direction;
@@ -270,11 +270,11 @@ bool PlayerBase::PlayerControl()
 
 	switch (player_id_)
 	{
-	case 0:										// Íæ¼ÒÒ»
+	case 0:										// ç©å®¶ä¸€
 		if (GetAsyncKeyState('A') & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
-			if (on_ice_ && tank_dir_ == kDirLeft)	// Èç¹ûÌ¹¿Ë³¯ÏòÊÇ ×ó
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
+			if (on_ice_ && tank_dir_ == kDirLeft)	// å¦‚æœå¦å…‹æœå‘æ˜¯ å·¦
 			{
 				automove_ = true;
 				automove_counter_ = 0;
@@ -289,7 +289,7 @@ bool PlayerBase::PlayerControl()
 		}
 		else if (GetAsyncKeyState('W') & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
 			if (on_ice_ && tank_dir_ == kDirUp)
 			{
 				automove_ = true;
@@ -306,7 +306,7 @@ bool PlayerBase::PlayerControl()
 		}
 		else if (GetAsyncKeyState('D') & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
 			if (on_ice_ && tank_dir_ == kDirRight)
 			{
 				automove_ = true;
@@ -323,7 +323,7 @@ bool PlayerBase::PlayerControl()
 		}
 		else if (GetAsyncKeyState('S') & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
 			if (on_ice_ && tank_dir_ == kDirDown)
 			{
 				automove_ = true;
@@ -337,14 +337,14 @@ bool PlayerBase::PlayerControl()
 			is_moving_ = true;
 			Move(kDirDown);
 		}
-		else if (is_moving_)		// ËÉ¿ª°´¼ü£¬Í£Ö¹²¥·ÅÒÆ¶¯ÉùÒô£»Èç¹û°´ÏÂ²¢¿ìËÙËÉ¿ª£¬ÉùÒô²¥·ÅºóÓÖÁ¢¼´±»ÔİÍ££¬ËùÒÔÌı²»µ½ÉùÒô
+		else if (is_moving_)		// æ¾å¼€æŒ‰é”®ï¼Œåœæ­¢æ’­æ”¾ç§»åŠ¨å£°éŸ³ï¼›å¦‚æœæŒ‰ä¸‹å¹¶å¿«é€Ÿæ¾å¼€ï¼Œå£°éŸ³æ’­æ”¾ååˆç«‹å³è¢«æš‚åœï¼Œæ‰€ä»¥å¬ä¸åˆ°å£°éŸ³
 		{
 			is_moving_ = false;
 			MciSound::PlayMovingSound(false);
 		}
 
-		// ²»ÄÜ¼Ó else if, ²»È»ÒÆ¶¯Ê±ºòÎŞ·¨·¢Éä×Óµ¯
-		if (GetAsyncKeyState('J') & 0x8000)	// ·¢Éä×Óµ¯
+		// ä¸èƒ½åŠ  else if, ä¸ç„¶ç§»åŠ¨æ—¶å€™æ— æ³•å‘å°„å­å¼¹
+		if (GetAsyncKeyState('J') & 0x8000)	// å‘å°„å­å¼¹
 		{
 			if (!ShootBullet(0))
 			{
@@ -360,10 +360,10 @@ bool PlayerBase::PlayerControl()
 		}
 		break;
 
-	case 1:										// Íæ¼Ò¶ş
+	case 1:										// ç©å®¶äºŒ
 		if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
 			if (on_ice_ && tank_dir_ == kDirLeft)
 			{
 				automove_ = true;
@@ -380,7 +380,7 @@ bool PlayerBase::PlayerControl()
 		}
 		else if (GetAsyncKeyState(VK_UP) & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
 			if (on_ice_ && tank_dir_ == kDirUp)
 			{
 				automove_ = true;
@@ -397,7 +397,7 @@ bool PlayerBase::PlayerControl()
 		}
 		else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
 			if (on_ice_ && tank_dir_ == kDirRight)
 			{
 				automove_ = true;
@@ -414,7 +414,7 @@ bool PlayerBase::PlayerControl()
 		}
 		else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		{
-			// Í¬·½ÏòÒÆ¶¯²Å¿ªÆô×Ô¶¯ÒÆ¶¯
+			// åŒæ–¹å‘ç§»åŠ¨æ‰å¼€å¯è‡ªåŠ¨ç§»åŠ¨
 			if (on_ice_ && tank_dir_ == kDirDown)
 			{
 				automove_ = true;
@@ -435,8 +435,8 @@ bool PlayerBase::PlayerControl()
 			is_moving_ = false;
 		}
 
-		// Êı×Ö¼ü 1 ·¢Éä×Óµ¯
-		if (GetAsyncKeyState(VK_NUMPAD1) & 0x8000)
+		// æ•°å­—é”® 1 å‘å°„å­å¼¹; 0x31å¯¹åº”æ•°å­—1é”®ï¼ˆéæ•°å­—é”®çš„1ï¼Œå¦‚ç¬”è®°æœ¬ä¸Šæ²¡æœ‰æ•°å­—é”®ç›˜æ—¶ï¼Œéœ€è¦ç”¨Qé”®å·¦ä¸Šæ–¹é‚£ä¸ª1é”®ï¼‰
+		if ((GetAsyncKeyState(VK_NUMPAD1) & 0x8000) || (GetAsyncKeyState(0x31) & 0x8000))
 		{
 			if (!ShootBullet(0))
 			{
@@ -468,12 +468,12 @@ BulletShootKind PlayerBase::BulletMoving(const HDC &center_hdc)
 
 	for (int i = 0; i < 2; i++)
 	{
-		// ×Óµ¯ÔÚÒÆ¶¯
+		// å­å¼¹åœ¨ç§»åŠ¨
 		if (bullet_[i].x != kShootTableX)
 		{
 			int dir = bullet_[i].direction;
 
-			// ¼ì²â´òÖĞÕÏ°­ÎïÓë·ñ
+			// æ£€æµ‹æ‰“ä¸­éšœç¢ç‰©ä¸å¦
 			BulletShootKind kind = CheckBomb(i);
 			if (kind == BulletShootKind::kCamp || kind == BulletShootKind::kPlayer1 || kind == BulletShootKind::kPlayer2)
 			{
@@ -484,13 +484,13 @@ BulletShootKind PlayerBase::BulletMoving(const HDC &center_hdc)
 				continue;
 			}
 
-			// ÏÈ¼ì²âÔÙÈ¡Ïû±ê¼Ç
+			// å…ˆæ£€æµ‹å†å–æ¶ˆæ ‡è®°
 			SignBullet(bullet_[i].x, bullet_[i].y, dir, kElementEmpty);
 
 			bullet_[i].x += dev_xy_[dir][0] * bullet_[i].speed[player_tank_level_];
 			bullet_[i].y += dev_xy_[dir][1] * bullet_[i].speed[player_tank_level_];
 
-			// ¼ÇÂ¼×Óµ¯ 1 µÄ²½Êı, ¾ö¶¨¿É·ñ·¢Éä×Óµ¯ 2
+			// è®°å½•å­å¼¹ 1 çš„æ­¥æ•°, å†³å®šå¯å¦å‘å°„å­å¼¹ 2
 			if (i == 0)
 			{
 				bullet1_counter_--;
@@ -525,13 +525,13 @@ void PlayerBase::Bombing(const HDC &center_hdc)
 	}
 }
 
-// GameControl ÄÚµ÷ÓÃ, Í¨¹ı²ÎÊı½« bullet_.killed_id ´«µİ½øÈ¥
+// GameControl å†…è°ƒç”¨, é€šè¿‡å‚æ•°å°† bullet_.killed_id ä¼ é€’è¿›å»
 void PlayerBase::GetKillEnemy(int &bullet1, int &bullet2)
 {
 	bullet1 = bullet_[0].killed_id;
 	bullet2 = bullet_[1].killed_id;
 
-	// ÖØÖÃ±êÖ¾
+	// é‡ç½®æ ‡å¿—
 	bullet_[0].killed_id = 0;
 	bullet_[1].killed_id = 0;
 }
@@ -539,7 +539,7 @@ void PlayerBase::GetKillEnemy(int &bullet1, int &bullet2)
 
 void PlayerBase::BeKilled()
 {
-	// Èç¹ûÏÔÊ¾×Å±£»¤»·²»»áÊÜµ½¹¥»÷
+	// å¦‚æœæ˜¾ç¤ºç€ä¿æŠ¤ç¯ä¸ä¼šå—åˆ°æ”»å‡»
 	if (ring_.can_show_)
 	{
 		return;
@@ -551,7 +551,7 @@ void PlayerBase::BeKilled()
 	blast_.SetBlasting(tank_x_, tank_y_);
 }
 
-// Íæ¼Ò±»»÷ÖĞ±¬Õ¨
+// ç©å®¶è¢«å‡»ä¸­çˆ†ç‚¸
 bool PlayerBase::Blasting(const HDC &center_hdc)
 {
 	BlastState result = blast_.Blasting(center_hdc);
@@ -564,7 +564,7 @@ bool PlayerBase::Blasting(const HDC &center_hdc)
 		break;
 
 	case BlastState::kBlastEnd:
-		// ¼ì²âÊÇ·ñ¿ÉÒÔÖØÉú
+		// æ£€æµ‹æ˜¯å¦å¯ä»¥é‡ç”Ÿ
 		if (player_life_-- <= 0)
 		{
 			is_died_ = true;
@@ -589,7 +589,7 @@ const int &PlayerBase::GetID()
 	return player_id_;
 }
 
-/*GameControl ÄÚÑ­»·µ÷ÓÃ*/
+/*GameControl å†…å¾ªç¯è°ƒç”¨*/
 bool PlayerBase::IsGetTimeProp()
 {
 	bool temp = get_time_prop_;
@@ -601,12 +601,12 @@ bool PlayerBase::IsGetShvelProp()
 {
 	if (get_shovel_prop_)
 	{
-		// ¸Õ»ñµÃ²ù×ÓµÀ¾ß
+		// åˆšè·å¾—é“²å­é“å…·
 		if (shovel_prop_counter_++ == 0)
 		{
 			ProtectCamp(kElementStone);
 		}
-		else if (shovel_prop_counter_ > 31000 && shovel_prop_counter_ < 35400)		// ÏÔÊ¾Ò»¶ÎÊ±¼äºóÉÁË¸
+		else if (shovel_prop_counter_ > 31000 && shovel_prop_counter_ < 35400)		// æ˜¾ç¤ºä¸€æ®µæ—¶é—´åé—ªçƒ
 		{
 			int val = kElementStone;
 			if (shovel_prop_counter_ % 12 < 6)
@@ -630,7 +630,7 @@ bool PlayerBase::IsGetShvelProp()
 	return false;
 }
 
-/*GameControl ÄÚÑ­»·µ÷ÓÃ*/
+/*GameControl å†…å¾ªç¯è°ƒç”¨*/
 bool PlayerBase::IsGetBombProp()
 {
 	bool temp = get_bomb_prop_;
@@ -647,7 +647,7 @@ void PlayerBase::ShowProp(const HDC &center_hdc)
 //
 bool PlayerBase::ShowScorePanel(const HDC &image_hdc)
 {
-	return score_panel_->Show(image_hdc);// ÕûÕÅ»­²¼Ëõ·ÅÏÔÊ¾ image µ½Ö÷´°¿Ú
+	return score_panel_->Show(image_hdc);// æ•´å¼ ç”»å¸ƒç¼©æ”¾æ˜¾ç¤º image åˆ°ä¸»çª—å£
 }
 
 //
@@ -699,11 +699,11 @@ void PlayerBase::SetShowGameover()
 
 void PlayerBase::SignBullet(int left_x, int top_y, byte dir, int val)
 {
-	// ×ª»»µ¯Í·×ø±ê
+	// è½¬æ¢å¼¹å¤´åæ ‡
 	int hx = left_x + Bullet::devto_head[dir][0];
 	int hy = top_y + Bullet::devto_head[dir][1];
 
-	// ×ª»»³É 4*4 ¸ñ×ÓÏÂ±êË÷Òı
+	// è½¬æ¢æˆ 4*4 æ ¼å­ä¸‹æ ‡ç´¢å¼•
 	int b4i = hy / kSmallBoxSize;
 	int b4j = hx / kSmallBoxSize;
 	if (b4i > 51 || b4j > 51 || b4i < 0 || b4j < 0)
@@ -717,19 +717,19 @@ void PlayerBase::SignBullet(int left_x, int top_y, byte dir, int val)
 // private function
 void PlayerBase::Reborn()
 {
-	tank_x_ = (4 + 4 * player_id_) * 16 + kBoxSize;				// Ì¹¿ËÊ×´Î³öÏÖÊ±ºòµÄÖĞĞÄ×ø±ê
+	tank_x_ = (4 + 4 * player_id_) * 16 + kBoxSize;				// å¦å…‹é¦–æ¬¡å‡ºç°æ—¶å€™çš„ä¸­å¿ƒåæ ‡
 	tank_y_ = 12 * 16 + kBoxSize;
-	SignBox_4(tank_x_, tank_y_, kSignPlayer + player_id_);		// Ì¹¿Ë³öÏÖ, ½«ËÄ½ÇĞÇ±ê¼Ç¸ÄÎªÌ¹¿Ë±ê¼Ç
+	SignBox_4(tank_x_, tank_y_, kSignPlayer + player_id_);		// å¦å…‹å‡ºç°, å°†å››è§’æ˜Ÿæ ‡è®°æ”¹ä¸ºå¦å…‹æ ‡è®°
 
-	player_tank_level_ = 0;										// Ì¹¿Ë¼¶±ğ [0-3]
+	player_tank_level_ = 0;										// å¦å…‹çº§åˆ« [0-3]
 	tank_timer_.SetDrtTime(move_speed_dev_[player_tank_level_]);
 	bullet_timer_.SetDrtTime(bullet_speed_dev_[player_tank_level_]);
 
-	tank_dir_ = kDirUp;											// Ì¹¿Ë·½Ïò
+	tank_dir_ = kDirUp;											// å¦å…‹æ–¹å‘
 
-	bullet1_counter_ = 6;										// ×Óµ¯ 1 ÔË¶¯ N ¸öÑ­»·ºó²Å¿ÉÒÔ·¢Éä×Óµ¯ 2 
+	bullet1_counter_ = 6;										// å­å¼¹ 1 è¿åŠ¨ N ä¸ªå¾ªç¯åæ‰å¯ä»¥å‘å°„å­å¼¹ 2 
 	is_moving_ = false;
-	ring_.SetShowable(3222);									// ÏÔÊ¾±£»¤»·
+	ring_.SetShowable(3222);									// æ˜¾ç¤ºä¿æŠ¤ç¯
 }
 
 void PlayerBase::DispatchProp(int prop_kind)
@@ -739,25 +739,25 @@ void PlayerBase::DispatchProp(int prop_kind)
 
 	switch (prop_kind)
 	{
-	case kPropAdd:			// ¼Ó»ú
+	case kPropAdd:			// åŠ æœº
 		MciSound::PlaySounds(kSoundAddLife);
 		player_life_ = player_life_ + 1 > 5 ? 5 : player_life_ + 1;
 		break;
-	case kPropStar:			// Îå½ÇĞÇ
+	case kPropStar:			// äº”è§’æ˜Ÿ
 		player_tank_level_ = player_tank_level_ + 1 > 3 ? 3 : player_tank_level_ + 1;
 		tank_timer_.SetDrtTime(move_speed_dev_[player_tank_level_]);
 		bullet_timer_.SetDrtTime(bullet_speed_dev_[player_tank_level_]);
 		break;
-	case kPropTime:			// Ê±ÖÓ
+	case kPropTime:			// æ—¶é’Ÿ
 		get_time_prop_ = true;
 		break;
-	case  kPropBomb:		// µØÀ×
+	case  kPropBomb:		// åœ°é›·
 		get_bomb_prop_ = true;
 		break;
-	case kPropShovel:		// ²ù×Ó
+	case kPropShovel:		// é“²å­
 		get_shovel_prop_ = true;
 		break;
-	case  kPropCap:			// Ã±×Ó
+	case  kPropCap:			// å¸½å­
 		ring_.SetShowable(12000);
 		break;
 	default:
@@ -766,19 +766,19 @@ void PlayerBase::DispatchProp(int prop_kind)
 }
 
 /*
-* ±äÏòµÄÍ¬Ê±µ÷ÕûÌ¹¿ËËùÔÚ¸ñ×Ó. ±ØĞë±£Ö¤Ì¹¿ËÖĞĞÄÔÚ¸ñ×ÓÏßÉÏ
- * Íæ¼ÒÒÆ¶¯¼ÆÊ±Æ÷ tank_timer_ Î´µ½Ê±	²»ÄÜÒÆ¶¯
- * Íæ¼ÒÉúÃüÖµÓÃ¹âºó					²»ÄÜÒÆ¶¯
- * Íæ¼ÒÌ¹¿ËÕıÔÚ±¬Õ¨					²»ÄÜÒÆ¶¯
- * Íæ¼Ò±»ÁíÒ»¸öÍæ¼Ò»÷ÖĞºó				²»ÄÜÒÆ¶¯
+* å˜å‘çš„åŒæ—¶è°ƒæ•´å¦å…‹æ‰€åœ¨æ ¼å­. å¿…é¡»ä¿è¯å¦å…‹ä¸­å¿ƒåœ¨æ ¼å­çº¿ä¸Š
+ * ç©å®¶ç§»åŠ¨è®¡æ—¶å™¨ tank_timer_ æœªåˆ°æ—¶	ä¸èƒ½ç§»åŠ¨
+ * ç©å®¶ç”Ÿå‘½å€¼ç”¨å…‰å					ä¸èƒ½ç§»åŠ¨
+ * ç©å®¶å¦å…‹æ­£åœ¨çˆ†ç‚¸					ä¸èƒ½ç§»åŠ¨
+ * ç©å®¶è¢«å¦ä¸€ä¸ªç©å®¶å‡»ä¸­å				ä¸èƒ½ç§»åŠ¨
 
- * ÒÆ¶¯Ç°Çå³ıÌ¹¿Ë tank_x_,tank_y_ ËùÔÚµÄ box_4 ËÄ¸ö¸ñ×Ó = ¿Õ£¬±íÊ¾¸Ã´¦Ã»ÓĞ¶«Î÷´æÔÚ
- * Èç¹ûÊÇ±äÏò£¬ÄÇÃ´µ÷Õû tank_x_,tank_y_ µ½ÕıÈ·µÄ¸ñ×ÓÎ»ÖÃÉÏ
- * ¼ì²âÊÇ·ñ¿ÉÒÔÒÆ¶¯
- * Èç¹û¿ÉÒÔÒÆ¶¯£¬¼ÆËãĞÂµÄ tank_x_, tank_y_ ×ø±ê
- * ÒÆ¶¯ºó±ê¼Ç box_4 ËÄ¸ö¸ñ×Ó = kSignPlayer + player_id_£»±íÊ¾¸ÃÍæ¼ÒÌ¹¿Ë´¦ÓÚĞÂÎ»ÖÃ
+ * ç§»åŠ¨å‰æ¸…é™¤å¦å…‹ tank_x_,tank_y_ æ‰€åœ¨çš„ box_4 å››ä¸ªæ ¼å­ = ç©ºï¼Œè¡¨ç¤ºè¯¥å¤„æ²¡æœ‰ä¸œè¥¿å­˜åœ¨
+ * å¦‚æœæ˜¯å˜å‘ï¼Œé‚£ä¹ˆè°ƒæ•´ tank_x_,tank_y_ åˆ°æ­£ç¡®çš„æ ¼å­ä½ç½®ä¸Š
+ * æ£€æµ‹æ˜¯å¦å¯ä»¥ç§»åŠ¨
+ * å¦‚æœå¯ä»¥ç§»åŠ¨ï¼Œè®¡ç®—æ–°çš„ tank_x_, tank_y_ åæ ‡
+ * ç§»åŠ¨åæ ‡è®° box_4 å››ä¸ªæ ¼å­ = kSignPlayer + player_id_ï¼›è¡¨ç¤ºè¯¥ç©å®¶å¦å…‹å¤„äºæ–°ä½ç½®
 
- * ĞÂµÄ×ø±ê tank_x_, tank_y_ ÒÑ¾­¸üĞÂÍê±Ï£¬º¯Êı·µ»Ø£¬´ıÑ­»·Ìå¸ù¾İÕâ¸ö×ø±êÖØĞÂ»æÖÆÌ¹¿Ë£¬´Ó¶øÊµÏÖÒÆ¶¯Ğ§¹û¡£
+ * æ–°çš„åæ ‡ tank_x_, tank_y_ å·²ç»æ›´æ–°å®Œæ¯•ï¼Œå‡½æ•°è¿”å›ï¼Œå¾…å¾ªç¯ä½“æ ¹æ®è¿™ä¸ªåæ ‡é‡æ–°ç»˜åˆ¶å¦å…‹ï¼Œä»è€Œå®ç°ç§»åŠ¨æ•ˆæœã€‚
  */
 void PlayerBase::Move(int new_dir)
 {
@@ -787,7 +787,7 @@ void PlayerBase::Move(int new_dir)
 		return;
 	}
 
-	// Èç¹ûÍæ¼Ò±»ÁíÒ»¸öÍæ¼Ò»÷ÖĞÔİÍ£
+	// å¦‚æœç©å®¶è¢«å¦ä¸€ä¸ªç©å®¶å‡»ä¸­æš‚åœ
 	if (is_pause_)
 	{
 		return;
@@ -797,35 +797,35 @@ void PlayerBase::Move(int new_dir)
 
 	if (tank_dir_ != new_dir)
 	{
-		// Ô­×óÓÒ±äÉÏÏÂ·½Ïò
+		// åŸå·¦å³å˜ä¸Šä¸‹æ–¹å‘
 		if (tank_dir_ == kDirLeft || tank_dir_ == kDirRight)
 		{
-			if (tank_x_ > (tank_x_ / kBoxSize) * kBoxSize + kBoxSize / 2 - 1)	// Èç¹ûÊÇ¿¿½ü¸ñ×ÓÏßÉÏµÄÓÒ±ß½Úµã, -1ÊÇĞŞÕı
+			if (tank_x_ > (tank_x_ / kBoxSize) * kBoxSize + kBoxSize / 2 - 1)	// å¦‚æœæ˜¯é è¿‘æ ¼å­çº¿ä¸Šçš„å³è¾¹èŠ‚ç‚¹, -1æ˜¯ä¿®æ­£
 			{
 				tank_x_ = (tank_x_ / kBoxSize + 1) * kBoxSize;
 			}
 			else
 			{
-				tank_x_ = (tank_x_ / kBoxSize) * kBoxSize;					// ¿¿½ü¸ñ×ÓÏßÉÏµÄ×ó±ß½Úµã
+				tank_x_ = (tank_x_ / kBoxSize) * kBoxSize;					// é è¿‘æ ¼å­çº¿ä¸Šçš„å·¦è¾¹èŠ‚ç‚¹
 			}
 		}
-		// ÉÏÏÂ±ä×óÓÒ
+		// ä¸Šä¸‹å˜å·¦å³
 		else
 		{
-			if (tank_y_ > (tank_y_ / kBoxSize) * kBoxSize + kBoxSize / 2 - 1)	// Èç¹ûÊÇ¿¿½ü¸ñ×ÓÏßÉÏµÄÏÂ±ß½Úµã, -1ÊÇĞŞÕı
+			if (tank_y_ > (tank_y_ / kBoxSize) * kBoxSize + kBoxSize / 2 - 1)	// å¦‚æœæ˜¯é è¿‘æ ¼å­çº¿ä¸Šçš„ä¸‹è¾¹èŠ‚ç‚¹, -1æ˜¯ä¿®æ­£
 			{
 				tank_y_ = (tank_y_ / kBoxSize + 1) * kBoxSize;
 			}
 			else
 			{
-				tank_y_ = (tank_y_ / kBoxSize) * kBoxSize;					// ¿¿½ü¸ñ×ÓÏßÉÏµÄÉÏ±ß½Úµã
+				tank_y_ = (tank_y_ / kBoxSize) * kBoxSize;					// é è¿‘æ ¼å­çº¿ä¸Šçš„ä¸Šè¾¹èŠ‚ç‚¹
 			}
 		}
 
-		// ¸ü¸Ä·½Ïò, ±ØĞëÏÈµ÷ÕıÎ»ÖÃºó²ÅÄÜÉèÖÃ·½Ïò!!
+		// æ›´æ”¹æ–¹å‘, å¿…é¡»å…ˆè°ƒæ­£ä½ç½®åæ‰èƒ½è®¾ç½®æ–¹å‘!!
 		tank_dir_ = new_dir;
 	}
-	else								// ÒÆ¶¯
+	else								// ç§»åŠ¨
 	{
 		if (CheckMoveable())
 		{
@@ -836,34 +836,34 @@ void PlayerBase::Move(int new_dir)
 	SignBox_4(tank_x_, tank_y_, kSignPlayer + player_id_);
 }
 
-/* ÅĞ¶Ïµ±Ç°·½Ïò¿É·ñÒÆ¶¯
+/* åˆ¤æ–­å½“å‰æ–¹å‘å¯å¦ç§»åŠ¨
 	box_8[i][j]
-	i = y / kBoxSize		// y ×ø±ê¶ÔÓ¦µÄÊÇ i Öµ
-	j = x / kBoxSize		// x ×ø±ê¶ÔÓ¦µÄÊÇ j Öµ
+	i = y / kBoxSize		// y åæ ‡å¯¹åº”çš„æ˜¯ i å€¼
+	j = x / kBoxSize		// x åæ ‡å¯¹åº”çš„æ˜¯ j å€¼
 	---------
 	| 1 | 2	|
 	----a----
 	| 3 | 4	|
 	---------
-* Èç¹û (x,y) ÔÚ a µã, ×ª»»ºóµÄ i,j ÊôÓÚ¸ñ×Ó 4
-* Èç¹û x ÖµÔÚ a µã×ó±ß, Ôò×ª»»ºóµÄ j ÊôÓÚ 1»ò3; ÓÒ±ßÔòÊôÓÚ 2»ò4
-* Èç¹û y ÖµÔÚ a µãÒÔÉÏ, Ôò×ª»»ºóµÄ i ÊôÓÚ 1»ò2; ÒÔÏÂÔòÊôÓÚ 3»ò4
-** Èç¹û tempx,tempy ¿çÔ½ÁË¸ñ×ÓÓÖÓöµ½ÕÏ°­, ÄÇÃ´¾Í½« tank_x_ »ò tank_y_ µ÷Õûµ½¸ñ×ÓÏßÉÏ,
+* å¦‚æœ (x,y) åœ¨ a ç‚¹, è½¬æ¢åçš„ i,j å±äºæ ¼å­ 4
+* å¦‚æœ x å€¼åœ¨ a ç‚¹å·¦è¾¹, åˆ™è½¬æ¢åçš„ j å±äº 1æˆ–3; å³è¾¹åˆ™å±äº 2æˆ–4
+* å¦‚æœ y å€¼åœ¨ a ç‚¹ä»¥ä¸Š, åˆ™è½¬æ¢åçš„ i å±äº 1æˆ–2; ä»¥ä¸‹åˆ™å±äº 3æˆ–4
+** å¦‚æœ tempx,tempy è·¨è¶Šäº†æ ¼å­åˆé‡åˆ°éšœç¢, é‚£ä¹ˆå°±å°† tank_x_ æˆ– tank_y_ è°ƒæ•´åˆ°æ ¼å­çº¿ä¸Š,
 */
 bool PlayerBase::CheckMoveable()
 {
-	// Ì¹¿ËÖĞĞÄ×ø±ê
+	// å¦å…‹ä¸­å¿ƒåæ ‡
 	int tempx = tank_x_ + dev_xy_[tank_dir_][0];// *mSpeed[player_tank_level_];
 	int tempy = tank_y_ + dev_xy_[tank_dir_][1];// *mSpeed[player_tank_level_];
 
-	// ÓÎÏ·ÊÇÔËĞĞÔÚÒ»¸ö 208*208 µÄ»­²¼ÉÏµÄ£¬ËùÒÔÊµ¼ÊÓÎÏ·ÇøÓò´óĞ¡ÊÇ 208*208
-	// Èç¹ûĞÂ×ø±ê tempx < 8 ¼´Ì¹¿ËÖĞĞÄ×ø±ê < 8 £¬ËµÃ÷´ËÊ±ÒÑ¾­Ô½½ç£¨ÒòÎªÊÇÖĞĞÄµã£©£¬¾ÍÊÇËµÌ¹¿ËÒÑ¾­ÒÆ¶¯µ½±ß½çÁË
+	// æ¸¸æˆæ˜¯è¿è¡Œåœ¨ä¸€ä¸ª 208*208 çš„ç”»å¸ƒä¸Šçš„ï¼Œæ‰€ä»¥å®é™…æ¸¸æˆåŒºåŸŸå¤§å°æ˜¯ 208*208
+	// å¦‚æœæ–°åæ ‡ tempx < 8 å³å¦å…‹ä¸­å¿ƒåæ ‡ < 8 ï¼Œè¯´æ˜æ­¤æ—¶å·²ç»è¶Šç•Œï¼ˆå› ä¸ºæ˜¯ä¸­å¿ƒç‚¹ï¼‰ï¼Œå°±æ˜¯è¯´å¦å…‹å·²ç»ç§»åŠ¨åˆ°è¾¹ç•Œäº†
 	if (tempx < kBoxSize || tempy < kBoxSize || tempy > kCenterWidth - kBoxSize || tempx > kCenterHeight - kBoxSize)
 	{
-		// Èç¹ûÓöµ½ÕÏ°­Îï,½«Ì¹¿Ë×ø±êµ÷Õûµ½¸ñ×ÓÏßÉÏ. ²»È»Ì¹¿ËºÍÕÏ°­Îï»áÓĞ¼¸¸öÏñËØµã¼ä¸ô
+		// å¦‚æœé‡åˆ°éšœç¢ç‰©,å°†å¦å…‹åæ ‡è°ƒæ•´åˆ°æ ¼å­çº¿ä¸Š. ä¸ç„¶å¦å…‹å’Œéšœç¢ç‰©ä¼šæœ‰å‡ ä¸ªåƒç´ ç‚¹é—´éš”
 		switch (tank_dir_)
 		{
-		case kDirLeft:	tank_x_ = (tank_x_ / kBoxSize) * kBoxSize;	break;	// tank_x_ Óë tempx Ö®¼ä¿çÔ½ÁË¸ñ×Ó, ½«Ì¹¿Ë·Åµ½tank_x_ËùÔÚµÄ¸ñ×ÓÏßÉÏ
+		case kDirLeft:	tank_x_ = (tank_x_ / kBoxSize) * kBoxSize;	break;	// tank_x_ ä¸ tempx ä¹‹é—´è·¨è¶Šäº†æ ¼å­, å°†å¦å…‹æ”¾åˆ°tank_x_æ‰€åœ¨çš„æ ¼å­çº¿ä¸Š
 		case kDirUp:	tank_y_ = (tank_y_ / kBoxSize) * kBoxSize;	break;
 		case kDirRight: tank_x_ = (tempx / kBoxSize) * kBoxSize;	break;
 		case kDirDown:	tank_y_ = (tempy / kBoxSize) * kBoxSize;	break;
@@ -871,19 +871,19 @@ bool PlayerBase::CheckMoveable()
 		}
 		return false;
 	}
-	// ×ª»»ÏñËØµãËùÔÚµÄ xy[26][26] ÏÂ±ê
+	// è½¬æ¢åƒç´ ç‚¹æ‰€åœ¨çš„ xy[26][26] ä¸‹æ ‡
 	int index_i = tempy / kBoxSize;
 	int index_j = tempx / kBoxSize;
 
-	// ËÄ¸ö·½ÏòÌ¹¿ËÖĞĞÄµãÏà¶ÔÓÚÒª¼ì²âµÄÁ½¸ö 8*8 ¸ñ×ÓµÄÏÂ±êÆ«ÒÆÁ¿
+	// å››ä¸ªæ–¹å‘å¦å…‹ä¸­å¿ƒç‚¹ç›¸å¯¹äºè¦æ£€æµ‹çš„ä¸¤ä¸ª 8*8 æ ¼å­çš„ä¸‹æ ‡åç§»é‡
 	int dev[4][2][2] = { {{-1,-1},{0,-1}},  {{-1,-1},{-1,0}},  {{-1,1},{0,1}}, { {1,-1},{1,0}} };
 
-	// 8*8 ÕÏ°­Îï¸ñ×Ó¼ì²â
+	// 8*8 éšœç¢ç‰©æ ¼å­æ£€æµ‹
 	int temp1 = box_mark_->box_8[index_i + dev[tank_dir_][0][0]][index_j + dev[tank_dir_][0][1]];
 	int temp2 = box_mark_->box_8[index_i + dev[tank_dir_][1][0]][index_j + dev[tank_dir_][1][1]];
 
-	// prop_8µÀ¾ß¸ñ×Ó¼ì²â
-	int curi = tank_y_ / kBoxSize;	// µ±Ç°Ì¹¿ËËùÔÚµÄ×ø±ê, ²»ÊÇÏÂÒ»²½µÄ×ø±ê, ÓÃÓÚÅĞ¶ÏµÀ¾ß
+	// prop_8é“å…·æ ¼å­æ£€æµ‹
+	int curi = tank_y_ / kBoxSize;	// å½“å‰å¦å…‹æ‰€åœ¨çš„åæ ‡, ä¸æ˜¯ä¸‹ä¸€æ­¥çš„åæ ‡, ç”¨äºåˆ¤æ–­é“å…·
 	int curj = tank_x_ / kBoxSize;
 	int prop[4] = { box_mark_->prop_8[curi][curj],	 box_mark_->prop_8[curi - 1][curj],
 					box_mark_->prop_8[curi][curj - 1], box_mark_->prop_8[curi - 1][curj - 1] };
@@ -896,27 +896,27 @@ bool PlayerBase::CheckMoveable()
 		}
 	}
 
-	// ¼ì²âÌ¹¿Ë 4*4 ¸ñ×Ó
-	// ËÄ¸ö·½ÏòĞèÒª¼ì²âµÄÁ½¸ö 4*4 µÄ¸ñ×ÓÓëÌ¹¿ËÖĞĞÄËùÔÚ 4*4 ¸ñ×ÓµÄÏÂ±êÆ«ÒÆÁ¿
+	// æ£€æµ‹å¦å…‹ 4*4 æ ¼å­
+	// å››ä¸ªæ–¹å‘éœ€è¦æ£€æµ‹çš„ä¸¤ä¸ª 4*4 çš„æ ¼å­ä¸å¦å…‹ä¸­å¿ƒæ‰€åœ¨ 4*4 æ ¼å­çš„ä¸‹æ ‡åç§»é‡
 	int  dev_4[4][4][2] = { {{-2,-2},{1,-2},{-1,-2},{0,-2}}, {{-2,-2},{-2,1},{-2,-1},{-2,0}},
 							{{-2,2},{1,2},{-1,2},{0,2}}, {{2,-2},{2,1},{2,-1},{2,0}} };
-	// ×ª»»³É [52][52] ÏÂ±ê
+	// è½¬æ¢æˆ [52][52] ä¸‹æ ‡
 	int index_4i = tempy / kSmallBoxSize;
 	int index_4j = tempx / kSmallBoxSize;
 
-	// -1, 0, 1, 2 ¶¼¿ÉÒÔÒÆ¶¯
+	// -1, 0, 1, 2 éƒ½å¯ä»¥ç§»åŠ¨
 	bool tank1 = box_mark_->box_4[index_4i + dev_4[tank_dir_][0][0]][index_4j + dev_4[tank_dir_][0][1]] <= kElementIce;
 	bool tank2 = box_mark_->box_4[index_4i + dev_4[tank_dir_][1][0]][index_4j + dev_4[tank_dir_][1][1]] <= kElementIce;
 	bool tank3 = box_mark_->box_4[index_4i + dev_4[tank_dir_][2][0]][index_4j + dev_4[tank_dir_][2][1]] <= kElementIce;
 	bool tank4 = box_mark_->box_4[index_4i + dev_4[tank_dir_][3][0]][index_4j + dev_4[tank_dir_][3][1]] <= kElementIce;
 
-	// Óöµ½ÕÏ°­Îïµ÷½Ú×ø±ê
+	// é‡åˆ°éšœç¢ç‰©è°ƒèŠ‚åæ ‡
 	if (temp1 > 2 || temp2 > 2)
 	{
-		// Èç¹ûÓöµ½ÕÏ°­Îï,½«Ì¹¿Ë×ø±êµ÷Õûµ½¸ñ×ÓÏßÉÏ. ²»È»Ì¹¿ËºÍÕÏ°­Îï»áÓĞ¼¸¸öÏñËØµã¼ä¸ô
+		// å¦‚æœé‡åˆ°éšœç¢ç‰©,å°†å¦å…‹åæ ‡è°ƒæ•´åˆ°æ ¼å­çº¿ä¸Š. ä¸ç„¶å¦å…‹å’Œéšœç¢ç‰©ä¼šæœ‰å‡ ä¸ªåƒç´ ç‚¹é—´éš”
 		switch (tank_dir_)
 		{
-		case kDirLeft:	tank_x_ = (tank_x_ / kBoxSize) * kBoxSize;	break;	// tank_x_ Óë tempx Ö®¼ä¿çÔ½ÁË¸ñ×Ó, ½«Ì¹¿Ë·Åµ½tank_x_ËùÔÚµÄ¸ñ×ÓÏßÉÏ
+		case kDirLeft:	tank_x_ = (tank_x_ / kBoxSize) * kBoxSize;	break;	// tank_x_ ä¸ tempx ä¹‹é—´è·¨è¶Šäº†æ ¼å­, å°†å¦å…‹æ”¾åˆ°tank_x_æ‰€åœ¨çš„æ ¼å­çº¿ä¸Š
 		case kDirUp:	tank_y_ = (tank_y_ / kBoxSize) * kBoxSize;	break;
 		case kDirRight: tank_x_ = (tempx / kBoxSize) * kBoxSize;		break;
 		case kDirDown:	tank_y_ = (tempy / kBoxSize) * kBoxSize;		break;
@@ -924,13 +924,13 @@ bool PlayerBase::CheckMoveable()
 		}
 		return false;
 	}
-	// Óöµ½Íæ¼Ò²»ÓÃµ÷½Ú
+	// é‡åˆ°ç©å®¶ä¸ç”¨è°ƒèŠ‚
 	else if (!tank1 || !tank2 || !tank3 || !tank4)
 	{
 		return false;
 	}
 
-	//. Èç¹ûÊÇµÚÒ»´Î½øÈë kElementIce ÉÏÃæ
+	//. å¦‚æœæ˜¯ç¬¬ä¸€æ¬¡è¿›å…¥ kElementIce ä¸Šé¢
 	if (!on_ice_ && (temp1 == kElementIce || temp2 == kElementIce))
 	{
 		on_ice_ = true;
@@ -942,19 +942,19 @@ bool PlayerBase::CheckMoveable()
 	return true;
 }
 
-// ·¢Éä×Óµ¯
+// å‘å°„å­å¼¹
 bool PlayerBase::ShootBullet(int bullet_id)
 {
 	switch (bullet_id)
 	{
 	case 0:
-		// 1ºÅ×Óµ¯·¢ÉäÊ§°Ü, ±¬Õ¨Î´Íê³ÉÇ°²»ÄÜ·¢Éä
+		// 1å·å­å¼¹å‘å°„å¤±è´¥, çˆ†ç‚¸æœªå®Œæˆå‰ä¸èƒ½å‘å°„
 		if (bullet_[0].x != kShootTableX || bombs_[0].is_show_bomb == true)
 		{
 			return false;
 		}
 
-		// ×Óµ¯·¢Éäµã×ø±ê
+		// å­å¼¹å‘å°„ç‚¹åæ ‡
 		bullet_[0].x = (int)(tank_x_ + Bullet::devto_tank[tank_dir_][0]);
 		bullet_[0].y = (int)(tank_y_ + Bullet::devto_tank[tank_dir_][1]);
 		bullet_[0].direction = tank_dir_;
@@ -964,13 +964,13 @@ bool PlayerBase::ShootBullet(int bullet_id)
 		return true;
 
 	case 1:
-		// 2 ºÅ×Óµ¯·¢ÉäÊ§°Ü
+		// 2 å·å­å¼¹å‘å°„å¤±è´¥
 		if (player_tank_level_ < 2 || bullet_[1].x != kShootTableX || bullet1_counter_ > 0 || bombs_[1].is_show_bomb == true)
 		{
 			return false;
 		}
 
-		// ×Óµ¯·¢Éäµã×ø±ê
+		// å­å¼¹å‘å°„ç‚¹åæ ‡
 		bullet_[1].x = (int)(tank_x_ + Bullet::devto_tank[tank_dir_][0]);
 		bullet_[1].y = (int)(tank_y_ + Bullet::devto_tank[tank_dir_][1]);
 		bullet_[1].direction = tank_dir_;
@@ -989,18 +989,18 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 {
 	int dir = bullet_[i].direction;
 
-	// ×Óµ¯Í·½Ó´¥µ½ÕÏ°­ÎïµÄÄÇ¸öµã, ×óÓÒ·½ÏòµãÔÚÉÏ, ÉÏÏÂ·½ÏòµãÔÚÓÒ
+	// å­å¼¹å¤´æ¥è§¦åˆ°éšœç¢ç‰©çš„é‚£ä¸ªç‚¹, å·¦å³æ–¹å‘ç‚¹åœ¨ä¸Š, ä¸Šä¸‹æ–¹å‘ç‚¹åœ¨å³
 	int bombx = bullet_[i].x + Bullet::devto_head[dir][0];
 	int bomby = bullet_[i].y + Bullet::devto_head[dir][1];
 
 	bool flag = false;
-	int adjust_x = 0, adjust_y = 0;		// ĞŞÕı±¬ÕÕÍ¼Æ¬ÏÔÊ¾µÄ×ø±ê
+	int adjust_x = 0, adjust_y = 0;		// ä¿®æ­£çˆ†ç…§å›¾ç‰‡æ˜¾ç¤ºçš„åæ ‡
 
-	// ²»ÄÜÓÃ bombx ´úÌæ bullet_[i].x,·ñÔò»á¸²¸ÇÕÏ°­ÎïµÄ¼ì²â
+	// ä¸èƒ½ç”¨ bombx ä»£æ›¿ bullet_[i].x,å¦åˆ™ä¼šè¦†ç›–éšœç¢ç‰©çš„æ£€æµ‹
 	if (bullet_[i].x < 0 && bullet_[i].direction == kDirLeft)
 	{
 		flag = true;
-		adjust_x = 5;					// ½«±¬Õ¨Í¼Æ¬ÏòÓÒÒÆÒ»µã
+		adjust_x = 5;					// å°†çˆ†ç‚¸å›¾ç‰‡å‘å³ç§»ä¸€ç‚¹
 	}
 	else if (bullet_[i].y < 0 && bullet_[i].direction == kDirUp)
 	{
@@ -1008,7 +1008,7 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 		adjust_y = 5;
 	}
 
-	// ±ØĞë¼õÈ¥×Óµ¯µÄ¿í 4, ²»È»×Óµ¯Ô½½ç, ºóÃæ¼ì²âµ¼ÖÂ box_8 ÏÂ±êÔ½½ç
+	// å¿…é¡»å‡å»å­å¼¹çš„å®½ 4, ä¸ç„¶å­å¼¹è¶Šç•Œ, åé¢æ£€æµ‹å¯¼è‡´ box_8 ä¸‹æ ‡è¶Šç•Œ
 	else if (bullet_[i].x >= kCenterWidth - 4 && bullet_[i].direction == kDirRight)
 	{
 		flag = true;
@@ -1021,7 +1021,7 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 	}
 	if (flag)
 	{
-		// Éè¶¨±¬Õ¨²ÎÊı, ĞŞÕı±¬Õ¨ÖĞĞÄËùÔÚµÄ¸ñ×Ó,×óÓÒ»òÉÏÏÂÆ«ÒÆÒ»¸ö¸ñ×ÓÖ®ÀàµÄ..
+		// è®¾å®šçˆ†ç‚¸å‚æ•°, ä¿®æ­£çˆ†ç‚¸ä¸­å¿ƒæ‰€åœ¨çš„æ ¼å­,å·¦å³æˆ–ä¸Šä¸‹åç§»ä¸€ä¸ªæ ¼å­ä¹‹ç±»çš„..
 		bullet_[i].x = kShootTableX;
 		bombs_[i].is_show_bomb = true;
 		bombs_[i].bomb_x = (bombx / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][0]) * kSmallBoxSize;
@@ -1035,21 +1035,21 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 
 	int tempi, tempj;
 
-	// ×ø±êËùÔÚ 8*8 ¸ñ×ÓµÄË÷Òı
+	// åæ ‡æ‰€åœ¨ 8*8 æ ¼å­çš„ç´¢å¼•
 	int b8i = bomby / kBoxSize;
 	int b8j = bombx / kBoxSize;
 
-	// ½«×ø±ê×ª»»³É 4*4 ¸ñ×ÓË÷Òı
+	// å°†åæ ‡è½¬æ¢æˆ 4*4 æ ¼å­ç´¢å¼•
 	int b4i = bomby / kSmallBoxSize;
 	int b4j = bombx / kSmallBoxSize;
 
-	// Èç¹û»÷ÖĞÁíÍâÒ»¸öÍæ¼Ò×Óµ¯
+	// å¦‚æœå‡»ä¸­å¦å¤–ä¸€ä¸ªç©å®¶å­å¼¹
 	if (box_mark_->bullet_4[b4i][b4j] == kSignPlayerBullet + (1 - player_id_) * 10 + 0 ||
 		box_mark_->bullet_4[b4i][b4j] == kSignPlayerBullet + (1 - player_id_) * 10 + 1 ||
 		box_mark_->bullet_4[b4i][b4j] == kSignEnemyBullet)
 	{
 		bullet_[i].x = kShootTableX;
-		box_mark_->bullet_4[b4i][b4j] = kSignWaitUnsign;		// ÏÈ±ê¼ÇÖĞ¼äÖµ, µÈ´ı±»»÷ÖĞµÄ×Óµ¯²Á³ı¸Ã±ê¼Ç
+		box_mark_->bullet_4[b4i][b4j] = kSignWaitUnsign;		// å…ˆæ ‡è®°ä¸­é—´å€¼, ç­‰å¾…è¢«å‡»ä¸­çš„å­å¼¹æ“¦é™¤è¯¥æ ‡è®°
 		return BulletShootKind::kOther;
 	}
 	else if (box_mark_->bullet_4[b4i][b4j] == kSignWaitUnsign)
@@ -1064,11 +1064,11 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 	case kDirLeft:
 	case kDirRight:
 	{
-		// ×ÔÉí¸ñ×ÓºÍÉÏÒ»¸ö
+		// è‡ªèº«æ ¼å­å’Œä¸Šä¸€ä¸ª
 		int temp[2][2] = { {0, 0}, {-1, 0} };
 		for (int n = 0; n < 2; n++)
 		{
-			// 8*8 ¸ñ×Ó, ÅĞ¶ÏÊÇ·ñ»÷ÖĞµĞ»ú
+			// 8*8 æ ¼å­, åˆ¤æ–­æ˜¯å¦å‡»ä¸­æ•Œæœº
 			tempi = b8i + temp[n][0];
 			tempj = b8j + temp[n][1];
 			if (box_mark_->box_8[tempi][tempj] == kSignCamp)
@@ -1080,15 +1080,15 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 				return BulletShootKind::kCamp;
 			}
 
-			// ×óÓÒ¼ì²â×Óµ¯Í·ËùÔÚµÄ4*4¸ñ×ÓºÍËüÉÏÃæÏàÁÚµÄÄÇ¸ö
-			// ¼ì²â 4*4 ¸ñ×Ó, ÓÉ´ËÅĞ¶ÏÕÏ°­Îï
+			// å·¦å³æ£€æµ‹å­å¼¹å¤´æ‰€åœ¨çš„4*4æ ¼å­å’Œå®ƒä¸Šé¢ç›¸é‚»çš„é‚£ä¸ª
+			// æ£€æµ‹ 4*4 æ ¼å­, ç”±æ­¤åˆ¤æ–­éšœç¢ç‰©
 			tempi = b4i + temp[n][0];
 			tempj = b4j + temp[n][1];
 			if (box_mark_->box_4[tempi][tempj] == kElementWall || box_mark_->box_4[tempi][tempj] == kElementStone)
 			{
-				// Éè¶¨±¬Õ¨²ÎÊı, ĞŞÕı±¬Õ¨ÖĞĞÄËùÔÚµÄ¸ñ×Ó,×óÓÒ»òÉÏÏÂÆ«ÒÆÒ»¸ö¸ñ×ÓÖ®ÀàµÄ..
+				// è®¾å®šçˆ†ç‚¸å‚æ•°, ä¿®æ­£çˆ†ç‚¸ä¸­å¿ƒæ‰€åœ¨çš„æ ¼å­,å·¦å³æˆ–ä¸Šä¸‹åç§»ä¸€ä¸ªæ ¼å­ä¹‹ç±»çš„..
 				bullet_[i].x = kShootTableX;
-				bombs_[i].is_show_bomb = true;				// Ö¸Ê¾ i bomb ±¬Õ¨
+				bombs_[i].is_show_bomb = true;				// æŒ‡ç¤º i bomb çˆ†ç‚¸
 				bombs_[i].bomb_x = (bombx / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][0]) * kSmallBoxSize;
 				bombs_[i].bomb_y = (bomby / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][1]) * kSmallBoxSize;
 				bombs_[i].counter = 0;
@@ -1098,19 +1098,19 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 			else if (box_mark_->box_4[tempi][tempj] >= kSignEnemy /*&& box_mark_->box_4[tempi][tempj] < kSignEnemy + TOTAL_ENEMY_NUMBER*/)
 			{
 				bullet_[i].x = kShootTableX;
-				bombs_[i].is_show_bomb = true;				// Ö¸Ê¾ i bomb ±¬Õ¨
+				bombs_[i].is_show_bomb = true;				// æŒ‡ç¤º i bomb çˆ†ç‚¸
 				bombs_[i].bomb_x = (bombx / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][0]) * kSmallBoxSize;
 				bombs_[i].bomb_y = (bomby / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][1]) * kSmallBoxSize;
 				bombs_[i].counter = 0;
 
-				// ±ê¼Ç»÷ÖĞÁËµĞ»úµÄ id
+				// æ ‡è®°å‡»ä¸­äº†æ•Œæœºçš„ id
 				bullet_[i].killed_id = box_mark_->box_4[tempi][tempj];
 				return BulletShootKind::kOther;
 			}
 			else if (box_mark_->box_4[tempi][tempj] == kSignPlayer && player_id_ != 0 || box_mark_->box_4[tempi][tempj] == kSignPlayer + 1 && player_id_ != 1)
 			{
 				bullet_[i].x = kShootTableX;
-				bombs_[i].is_show_bomb = true;				// Ö¸Ê¾ i bomb ±¬Õ¨
+				bombs_[i].is_show_bomb = true;				// æŒ‡ç¤º i bomb çˆ†ç‚¸
 				bombs_[i].bomb_x = (bombx / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][0]) * kSmallBoxSize;
 				bombs_[i].bomb_y = (bomby / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][1]) * kSmallBoxSize;
 				bombs_[i].counter = 0;
@@ -1120,15 +1120,15 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 	}
 	break;
 
-	// ÉÏÏÂÖ»¼ì²â×óÓÒÏàÁÚµÄÁ½¸ö¸ñ×Ó
+	// ä¸Šä¸‹åªæ£€æµ‹å·¦å³ç›¸é‚»çš„ä¸¤ä¸ªæ ¼å­
 	case kDirUp:
 	case kDirDown:
 	{
-		// ×ÔÉí¸ñ×ÓºÍ×ó±ßÄÇÒ»¸ö¸ñ×Ó
+		// è‡ªèº«æ ¼å­å’Œå·¦è¾¹é‚£ä¸€ä¸ªæ ¼å­
 		int temp[2][2] = { { 0, 0 },{ 0, -1 } };
 		for (int n = 0; n < 2; n++)
 		{
-			// 8*8 ¸ñ×Ó, ÅĞ¶ÏÊÇ·ñ»÷ÖĞµĞ»ú
+			// 8*8 æ ¼å­, åˆ¤æ–­æ˜¯å¦å‡»ä¸­æ•Œæœº
 			tempi = b8i + temp[n][0];
 			tempj = b8j + temp[n][1];
 
@@ -1140,14 +1140,14 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 				return BulletShootKind::kCamp;
 			}
 
-			// ¼ì²â 4*4 ÊÇ·ñ»÷ÖĞÕÏ°­
+			// æ£€æµ‹ 4*4 æ˜¯å¦å‡»ä¸­éšœç¢
 			tempi = b4i + temp[n][0];
 			tempj = b4j + temp[n][1];
 			if (box_mark_->box_4[tempi][tempj] == kElementWall || box_mark_->box_4[tempi][tempj] == kElementStone)
 			{
-				// Éè¶¨±¬Õ¨²ÎÊı, ĞŞÕı±¬Õ¨ÖĞĞÄËùÔÚµÄ¸ñ×Ó,×óÓÒ»òÉÏÏÂÆ«ÒÆÒ»¸ö¸ñ×ÓÖ®ÀàµÄ..
+				// è®¾å®šçˆ†ç‚¸å‚æ•°, ä¿®æ­£çˆ†ç‚¸ä¸­å¿ƒæ‰€åœ¨çš„æ ¼å­,å·¦å³æˆ–ä¸Šä¸‹åç§»ä¸€ä¸ªæ ¼å­ä¹‹ç±»çš„..
 				bullet_[i].x = kShootTableX;
-				bombs_[i].is_show_bomb = true;				// Ö¸Ê¾ i bomb ±¬Õ¨
+				bombs_[i].is_show_bomb = true;				// æŒ‡ç¤º i bomb çˆ†ç‚¸
 				bombs_[i].bomb_x = (bombx / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][0]) * kSmallBoxSize;
 				bombs_[i].bomb_y = (bomby / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][1]) * kSmallBoxSize;
 				bombs_[i].counter = 0;
@@ -1157,19 +1157,19 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 			else if (box_mark_->box_4[tempi][tempj] >= kSignEnemy/* && box_mark_->box_4[tempi][tempj] < kSignEnemy + TOTAL_ENEMY_NUMBER*/)
 			{
 				bullet_[i].x = kShootTableX;
-				bombs_[i].is_show_bomb = true;				// Ö¸Ê¾ i bomb ±¬Õ¨
+				bombs_[i].is_show_bomb = true;				// æŒ‡ç¤º i bomb çˆ†ç‚¸
 				bombs_[i].bomb_x = (bombx / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][0]) * kSmallBoxSize;
 				bombs_[i].bomb_y = (bomby / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][1]) * kSmallBoxSize;
 				bombs_[i].counter = 0;
 
-				// ±ê¼Ç»÷ÖĞÁËµĞ»úµÄ id
+				// æ ‡è®°å‡»ä¸­äº†æ•Œæœºçš„ id
 				bullet_[i].killed_id = box_mark_->box_4[tempi][tempj];
 				return BulletShootKind::kOther;
 			}
 			else if (box_mark_->box_4[tempi][tempj] == kSignPlayer && player_id_ != 0 || box_mark_->box_4[tempi][tempj] == kSignPlayer + 1 && player_id_ != 1)
 			{
 				bullet_[i].x = kShootTableX;
-				bombs_[i].is_show_bomb = true;				// Ö¸Ê¾ i bomb ±¬Õ¨
+				bombs_[i].is_show_bomb = true;				// æŒ‡ç¤º i bomb çˆ†ç‚¸
 				bombs_[i].bomb_x = (bombx / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][0]) * kSmallBoxSize;
 				bombs_[i].bomb_y = (bomby / kSmallBoxSize + Bullet::bomb_center_dev[bullet_[i].direction][1]) * kSmallBoxSize;
 				bombs_[i].counter = 0;
@@ -1184,7 +1184,7 @@ BulletShootKind PlayerBase::CheckBomb(int i)
 	return BulletShootKind::kNone;
 }
 
-// ×Óµ¯»÷ÖĞÕÏ°­Îï±¬Õ¨µ÷ÓÃ¸Ãº¯Êı, »÷ÖĞ±ß½ç²»¿Éµ÷ÓÃ, ÏÂ±ê»áÔ½½ç[52][52]
+// å­å¼¹å‡»ä¸­éšœç¢ç‰©çˆ†ç‚¸è°ƒç”¨è¯¥å‡½æ•°, å‡»ä¸­è¾¹ç•Œä¸å¯è°ƒç”¨, ä¸‹æ ‡ä¼šè¶Šç•Œ[52][52]
 void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 {
 	int boxi = bullety / kSmallBoxSize;
@@ -1195,16 +1195,16 @@ void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 	case kDirLeft:
 	case kDirRight:
 	{
-		bool bin_once = false;		// ¶à´ÎÑ­»·ÖĞÖ»²¥·ÅÒ»´ÎÉùÒô
+		bool bin_once = false;		// å¤šæ¬¡å¾ªç¯ä¸­åªæ’­æ”¾ä¸€æ¬¡å£°éŸ³
 
-		// ÔÚÍ¬Ò»Ö±ÏßÏàÁÚµÄËÄ¸ö 4*4 ¸ñ×Ó, Ë³Ğò²»ÄÜ±ä, ºóÃæÓÃµ½ÏÂ±êÅĞ¶Ï
+		// åœ¨åŒä¸€ç›´çº¿ç›¸é‚»çš„å››ä¸ª 4*4 æ ¼å­, é¡ºåºä¸èƒ½å˜, åé¢ç”¨åˆ°ä¸‹æ ‡åˆ¤æ–­
 		int temp[4][2] = { { -2, 0 },{ -1, 0 },{ 0, 0 },{ 1, 0 } };
 		for (int i = 0; i < 4; i++)
 		{
 			tempx = boxi + temp[i][0];
 			tempy = boxj + temp[i][1];
 
-			// ×ªµ½ tempx,tempyËùÔÚµÄ 8*8 ¸ñ×ÓË÷Òı
+			// è½¬åˆ° tempx,tempyæ‰€åœ¨çš„ 8*8 æ ¼å­ç´¢å¼•
 			int n = tempx / 2;
 			int m = tempy / 2;
 
@@ -1212,7 +1212,7 @@ void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 			{
 				box_mark_->box_4[tempx][tempy] = kElementClear;
 
-				// ¼ì²â 8*8 ¸ñ×ÓÄÚµÄ4¸ö 4*4 µÄĞ¡¸ñ×ÓÊÇ·ñÈ«²¿±»Çå³ı,
+				// æ£€æµ‹ 8*8 æ ¼å­å†…çš„4ä¸ª 4*4 çš„å°æ ¼å­æ˜¯å¦å…¨éƒ¨è¢«æ¸…é™¤,
 				bool isClear = true;
 				for (int a = 2 * n; a < 2 * n + 2; a++)
 				{
@@ -1234,7 +1234,7 @@ void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 				MciSound::PlaySounds(kSoundBin);
 				bin_once = true;
 			}
-			else if (player_tank_level_ == 3 && box_mark_->box_4[tempx][tempy] == kElementStone && i % 2 == 0)	// %2==0 ·ÀÖ¹¶àÓàÑ­»·ÅĞ¶Ï
+			else if (player_tank_level_ == 3 && box_mark_->box_4[tempx][tempy] == kElementStone && i % 2 == 0)	// %2==0 é˜²æ­¢å¤šä½™å¾ªç¯åˆ¤æ–­
 			{
 				box_mark_->box_8[n][m] = kElementEmpty;
 				for (int a = 2 * n; a < 2 * n + 2; a++)
@@ -1252,16 +1252,16 @@ void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 	case kDirUp:
 	case kDirDown:
 	{
-		bool bin_once = false;		// ¶à´ÎÑ­»·ÖĞÖ»²¥·ÅÒ»´ÎÉùÒô
+		bool bin_once = false;		// å¤šæ¬¡å¾ªç¯ä¸­åªæ’­æ”¾ä¸€æ¬¡å£°éŸ³
 
-		// ÏàÁÚµÄËÄ¸ö 4*4 ¸ñ×Ó, Ë³Ğò²»ÄÜ±ä, ºóÃæÓÃµ½ÏÂ±êÅĞ¶Ï
+		// ç›¸é‚»çš„å››ä¸ª 4*4 æ ¼å­, é¡ºåºä¸èƒ½å˜, åé¢ç”¨åˆ°ä¸‹æ ‡åˆ¤æ–­
 		int temp[4][2] = { {0, -2}, {0, -1}, {0, 0}, {0, 1} };
 		for (int i = 0; i < 4; i++)
 		{
 			tempx = boxi + temp[i][0];
 			tempy = boxj + temp[i][1];
 
-			// ×ªµ½ tempx,tempyËùÔÚµÄ 8*8 ¸ñ×ÓË÷Òı
+			// è½¬åˆ° tempx,tempyæ‰€åœ¨çš„ 8*8 æ ¼å­ç´¢å¼•
 			int n = tempx / 2;
 			int m = tempy / 2;
 
@@ -1269,7 +1269,7 @@ void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 			{
 				box_mark_->box_4[tempx][tempy] = kElementClear;
 
-				// ¼ì²â 8*8 ¸ñ×ÓÄÚµÄ4¸ö 4*4 µÄĞ¡¸ñ×ÓÊÇ·ñÈ«²¿±»Çå³ı,
+				// æ£€æµ‹ 8*8 æ ¼å­å†…çš„4ä¸ª 4*4 çš„å°æ ¼å­æ˜¯å¦å…¨éƒ¨è¢«æ¸…é™¤,
 				bool isClear = true;
 				for (int a = 2 * n; a < 2 * n + 2; a++)
 				{
@@ -1291,7 +1291,7 @@ void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 				MciSound::PlaySounds(kSoundBin);
 				bin_once = true;
 			}
-			else if (player_tank_level_ == 3 && box_mark_->box_4[tempx][tempy] == kElementStone && i % 2 == 0)	// %2==0 ·ÀÖ¹¶àÓàÑ­»·ÅĞ¶Ï
+			else if (player_tank_level_ == 3 && box_mark_->box_4[tempx][tempy] == kElementStone && i % 2 == 0)	// %2==0 é˜²æ­¢å¤šä½™å¾ªç¯åˆ¤æ–­
 			{
 				box_mark_->box_8[n][m] = kElementEmpty;
 				for (int a = 2 * n; a < 2 * n + 2; a++)
@@ -1311,10 +1311,10 @@ void PlayerBase::ClearWallOrStone(int bulletid, int bulletx, int bullety)
 	}
 }
 
-// ²ÎÊıÊÇ 16 * 16 ÖĞĞÄµãÏñËØ×ø±ê, ÓëÌ¹¿ËÖĞĞÄ×ø±êÏàÍ¬
+// å‚æ•°æ˜¯ 16 * 16 ä¸­å¿ƒç‚¹åƒç´ åæ ‡, ä¸å¦å…‹ä¸­å¿ƒåæ ‡ç›¸åŒ
 void PlayerBase::SignBox_8(int x, int y, int val)
 {
-	// ÓÒÌ¹¿ËÖĞĞÄË÷Òı×ªµ½×óÉÏ½ÇÄÇ¸öµÄ ¸ñ×ÓË÷Òı
+	// å³å¦å…‹ä¸­å¿ƒç´¢å¼•è½¬åˆ°å·¦ä¸Šè§’é‚£ä¸ªçš„ æ ¼å­ç´¢å¼•
 	int iy = y / kBoxSize - 1;
 	int jx = x / kBoxSize - 1;
 	for (int i = iy; i < iy + 2; i++)
@@ -1326,35 +1326,35 @@ void PlayerBase::SignBox_8(int x, int y, int val)
 	}
 }
 
-// ¸ù¾İÌ¹¿ËÖĞĞÄ×ø±ê, ±ê¼Ç16¸ö 4*4 ¸ñ×Ó
+// æ ¹æ®å¦å…‹ä¸­å¿ƒåæ ‡, æ ‡è®°16ä¸ª 4*4 æ ¼å­
 void PlayerBase::SignBox_4(int cx, int cy, int val)
 {
-	// ×óÓÒµ÷Õû cs,cy µ½Õ¼¾İ°Ù·Ö±È×î¶àµÄ 16 ¸ö 4*4 µÄ¸ñ×ÓÖĞĞÄ
+	// å·¦å³è°ƒæ•´ cs,cy åˆ°å æ®ç™¾åˆ†æ¯”æœ€å¤šçš„ 16 ä¸ª 4*4 çš„æ ¼å­ä¸­å¿ƒ
 	if (tank_dir_ == kDirLeft || tank_dir_ == kDirRight)
 	{
-		if (cx > (cx / kSmallBoxSize) * kSmallBoxSize + kSmallBoxSize / 2)	// Èç¹ûÊÇ¿¿½üÓÒ±ß½Úµã, 
+		if (cx > (cx / kSmallBoxSize) * kSmallBoxSize + kSmallBoxSize / 2)	// å¦‚æœæ˜¯é è¿‘å³è¾¹èŠ‚ç‚¹, 
 		{
 			cx = (cx / kSmallBoxSize + 1) * kSmallBoxSize;
 		}
 		else
 		{
-			cx = (cx / kSmallBoxSize) * kSmallBoxSize;					// ¿¿½ü¸ñ×ÓÏßÉÏµÄ×ó±ß½Úµã
+			cx = (cx / kSmallBoxSize) * kSmallBoxSize;					// é è¿‘æ ¼å­çº¿ä¸Šçš„å·¦è¾¹èŠ‚ç‚¹
 		}
 	}
-	// ÉÏÏÂ
+	// ä¸Šä¸‹
 	else
 	{
-		if (cy > (cy / kSmallBoxSize) * kSmallBoxSize + kSmallBoxSize / 2)	// Èç¹ûÊÇ¿¿½ü¸ñ×ÓÏÂ±ß½Úµã,
+		if (cy > (cy / kSmallBoxSize) * kSmallBoxSize + kSmallBoxSize / 2)	// å¦‚æœæ˜¯é è¿‘æ ¼å­ä¸‹è¾¹èŠ‚ç‚¹,
 		{
 			cy = (cy / kSmallBoxSize + 1) * kSmallBoxSize;
 		}
 		else
 		{
-			cy = (cy / kSmallBoxSize) * kSmallBoxSize;					// ¿¿½ü¸ñ×ÓÏßÉÏµÄÉÏ±ß½Úµã
+			cy = (cy / kSmallBoxSize) * kSmallBoxSize;					// é è¿‘æ ¼å­çº¿ä¸Šçš„ä¸Šè¾¹èŠ‚ç‚¹
 		}
 	}
 
-	// ÓÒÌ¹¿ËÖĞĞÄË÷Òı×ªµ½×óÉÏ½ÇÄÇ¸öµÄ ¸ñ×ÓË÷Òı
+	// å³å¦å…‹ä¸­å¿ƒç´¢å¼•è½¬åˆ°å·¦ä¸Šè§’é‚£ä¸ªçš„ æ ¼å­ç´¢å¼•
 	int iy = cy / kSmallBoxSize - 2;
 	int jx = cx / kSmallBoxSize - 2;
 	for (int i = iy; i < iy + 4; i++)
@@ -1366,14 +1366,14 @@ void PlayerBase::SignBox_4(int cx, int cy, int val)
 	}
 }
 
-// ¼ì²â4¸ö8*8 ¸ñ×Ó, ²ÎÊıÊÇ×óÉÏ½Ç¸ñ×ÓË÷Òı
+// æ£€æµ‹4ä¸ª8*8 æ ¼å­, å‚æ•°æ˜¯å·¦ä¸Šè§’æ ¼å­ç´¢å¼•
 bool PlayerBase::CheckBox_8(int iy, int jx)
 {
 	for (int i = iy; i < iy + 2; i++)
 	{
 		for (int j = jx; j < jx + 2; j++)
 		{
-			if (box_mark_->box_8[i][j] < kElementRiver)		// Èç¹ûÓĞÒ»¸ö 8*8 Ì¹¿Ë¿ÉÒÔ½øÀ´
+			if (box_mark_->box_8[i][j] < kElementRiver)		// å¦‚æœæœ‰ä¸€ä¸ª 8*8 å¦å…‹å¯ä»¥è¿›æ¥
 			{
 				return true;
 			}
@@ -1382,7 +1382,7 @@ bool PlayerBase::CheckBox_8(int iy, int jx)
 	return false;
 }
 
-/*»ñµÃ²ù×ÓµÀ¾ß±£»¤camp ÄÚ²¿Ê¹ÓÃ*/
+/*è·å¾—é“²å­é“å…·ä¿æŠ¤camp å†…éƒ¨ä½¿ç”¨*/
 void PlayerBase::ProtectCamp(int val)
 {
 	for (int i = 23; i < 26; i++)
@@ -1391,7 +1391,7 @@ void PlayerBase::ProtectCamp(int val)
 		{
 			if (i < 24 || j < 12 || j > 13)
 			{
-				box_mark_->box_8[i][j] = val;			// Äñ³²ÖÜÎ§ÊÇ kElementWall
+				box_mark_->box_8[i][j] = val;			// é¸Ÿå·¢å‘¨å›´æ˜¯ kElementWall
 				for (int m = 2 * i; m < 2 * i + 2; m++)
 				{
 					for (int n = 2 * j; n < 2 * j + 2; n++)
