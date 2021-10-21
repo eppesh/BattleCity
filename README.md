@@ -9,7 +9,7 @@
 ## 游戏截图
 ![游戏截图1](https://github.com/eppesh/BattleCity/blob/main/Screenshot/pic_1.png)  
 ![游戏截图2](https://github.com/eppesh/BattleCity/blob/main/Screenshot/pic_2.png) 
-![游戏截图3](https://github.com/eppesh/BattleCity/blob/main/Screenshot/pic_2.png) 
+![游戏截图3](https://github.com/eppesh/BattleCity/blob/main/Screenshot/pic_3.png) 
 
 ## 编译环境
 
